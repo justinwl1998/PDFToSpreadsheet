@@ -7,8 +7,7 @@ import PyPDF2
 import os
 import sys
 import xlwt
-from getRMCPage import getRMCPage
-from getCharges import getCharges
+from helpers import getRMCPage, getCharges
 from xlwt import Workbook
 
 directory = 'billings'
