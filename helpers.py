@@ -17,6 +17,8 @@ def getCharges(pageText):
     chargeList = []
     found = False
     for i in range(len(pageText)):
+        if pageText[i] == "Additional information":
+            break
         if "Regular monthly charges" in pageText[i]:
             found = True
         if found:
