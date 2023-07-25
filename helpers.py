@@ -3,11 +3,13 @@ import os
 import xlwt
 from xlwt import Workbook
 
-# Gets the page where the regular monthly charges are listed,
-# assuming the first page has an "at a glance" view
+from random import randint
 
 currency_style = xlwt.XFStyle()
 currency_style.num_format_str = "[$$-409]#,##0.00;-[$$-409]#,##0.00"
+
+# Gets the page where the regular monthly charges are listed,
+# assuming the first page has an "at a glance" view
 
 def getRMCPage(firstPage):
     # Get page number to find regular monthly charges
@@ -47,11 +49,13 @@ def outputToSpreadsheet(directory):
     colMod = 0
     rowMod = 4
     chargeDict = {}
-    rowList = []
+    cellList = [] # Occupied cell list, for duplicate charge checking
     chargeIndex = 1
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
         if os.path.isfile(f):
+            cellList.clear()
+            print(os.path.basename(f).split('/')[-1])
             reader = PyPDF2.PdfReader(f)
             billPage = getRMCPage(reader.pages[0].extract_text().splitlines()) - 1
             pageAsText = reader.pages[billPage].extract_text().splitlines()
@@ -76,12 +80,19 @@ def outputToSpreadsheet(directory):
 
                 try:
                     sheet1.write(rowMod, chargeDict[chargeName], float(tokens[-1][1:]), style=currency_style)
+                    cellList.append(chargeDict[chargeName])
                 except:
-                    # if charge with duplicate name is found, try to add new column,
-                    # this is assuming there is at most only one other similar charge
-                    # on the same billing
+                    # if charge with duplicate name is found, add new column for it
+                    alreadyFound = False
                     dupeIndex = 2
-                    if chargeName + "(" + str(dupeIndex) + ")" not in chargeDict:
+                    while chargeName + "(" + str(dupeIndex) + ")" in chargeDict:
+                        # check to see if the row is already occupied by the searched duplicate charge column
+                        if chargeDict[chargeName + "(" + str(dupeIndex) + ")"] not in cellList:
+                            alreadyFound = True
+                            break
+                        dupeIndex += 1
+
+                    if not alreadyFound:
                         chargeDict[chargeName + "(" + str(dupeIndex) + ")"] = chargeIndex
                         sheet1.write(3, chargeDict[chargeName + "(" + str(dupeIndex) + ")"], chargeName + "(" + str(dupeIndex) + ")")
                         chargeIndex += 1
@@ -90,6 +101,7 @@ def outputToSpreadsheet(directory):
                         sheet1.write(rowMod, chargeDict[chargeName + "(" + str(dupeIndex) + ")"], -1 * float(tokens[-1][2:]), style=currency_style)
                     else:    
                         sheet1.write(rowMod, chargeDict[chargeName + "(" + str(dupeIndex) + ")"], float(tokens[-1][1:]), style=currency_style)
+                    cellList.append(chargeDict[chargeName + "(" + str(dupeIndex) + ")"])
 
 
             rowMod += 1
