@@ -1,14 +1,16 @@
-# PDFToSpreadsheet
+# Xfinity Billing Statement Converter
 
-A Python application that reads Xfinity billing statements
+An application that converts Xfinity billing statements to a spreadsheet.
 
 ## About the Project
 
-This project utilizes a Python library to read Xfinity billing statements in PDF form and converting the charges to a readable spreadsheet.
+This application is written in Python. It reads Xfinity billing statements in a folder and converts all charges to a single spreadsheet. By doing so, the changes to billings are easily observable.
+
+If you ever wonder how your Xfinity bills have gotten higher and higher, use this application to find out.
 
 ## Getting Started
 
-Clone the repo and open and run python pdf2spreadsheet.py in a command prompt or terminal. You must have a folder called "billings" with PDFs of billing statements to scan through.
+[todo] release an executable
 
 ## Author
 Created by Justin Liu
