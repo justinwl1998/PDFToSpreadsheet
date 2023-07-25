@@ -25,20 +25,24 @@ def scanCallBack():
 root = Tk()
 root.title('Xfinity billing statement reader')
 root.resizable(False, False)
-root.geometry('300x150')
-L1 = Label(root, text="Statements directory")
-L1.pack( side = LEFT)
-entry_text = StringVar()
-E1 = Entry(root, bd = 5, state=DISABLED, textvariable=entry_text)
-E1.pack( side = LEFT)
-B1 = Button(root, text= "...", command = directorySelectCallBack)
-B1.pack(side = LEFT)
+root.geometry('400x150')
 
-B2 = Button(root, text="Scan into spreadsheet", command = scanCallBack)
-B2.place(relx=0.5, rely=0.8, anchor=CENTER)
+L1 = Label(root, text="Statements directory", justify="left", anchor="w")
+#L1.place(relx=0, rely=0.3, anchor = W)
+L1.grid(column=0, row=3, sticky=W, pady=(15,0), padx=(30,0))
+
+entry_text = StringVar()
+E1 = Entry(root, width=45, bd = 5, state=DISABLED, textvariable=entry_text)
+E1.grid(column=0, row=4, sticky=W, padx=(30,0))
+#E1.place(relx=0.25, rely=0.4)
+B1 = Button(root, text= "...", command = directorySelectCallBack, width=8)
+B1.grid(column=1, row=4, sticky=W)
+#B1.place(relx=1.0, rely=0.48, anchor=E)
+
+B2 = Button(root, text="Convert to spreadsheet", command = scanCallBack)
+B2.place(relx=0.5, rely=0.8, anchor=CENTER, height=32, width=150)
 root.mainloop()
-#root.withdraw()
-#folder_selected = filedialog.askdirectory()
+
 
 
 

@@ -46,7 +46,7 @@ def outputToSpreadsheet(directory):
         os.remove("output.xls")
     wb = Workbook()
     sheet1 = wb.add_sheet('Sheet 1')
-    colMod = 0
+    colMod = 0 # for determining which column and row to write to on the spreadsheet
     rowMod = 4
     chargeDict = {}
     cellList = [] # Occupied cell list, for duplicate charge checking
@@ -55,7 +55,6 @@ def outputToSpreadsheet(directory):
         f = os.path.join(directory, filename)
         if os.path.isfile(f):
             cellList.clear()
-            print(os.path.basename(f).split('/')[-1])
             reader = PyPDF2.PdfReader(f)
             billPage = getRMCPage(reader.pages[0].extract_text().splitlines()) - 1
             pageAsText = reader.pages[billPage].extract_text().splitlines()
@@ -75,7 +74,7 @@ def outputToSpreadsheet(directory):
                 
                 if chargeName not in chargeDict:
                     chargeDict[chargeName] = chargeIndex
-                    sheet1.write(3, chargeDict[chargeName], chargeName)
+                    sheet1.write(3, chargeDict[chargeName], chargeName) # Write new charge on this reserved row
                     chargeIndex += 1
 
                 try:
