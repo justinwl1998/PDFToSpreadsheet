@@ -41,7 +41,7 @@ def getCharges(pageText):
 
 # Scans all PDF files and writes all charges to a spreadsheet, taking the
 # title of the charge and how much was charged.
-def outputToSpreadsheet(directory):
+def outputToSpreadsheet(directory, labelText):
     if os.path.exists("output.xls"):
         os.remove("output.xls")
     wb = Workbook()
@@ -54,6 +54,7 @@ def outputToSpreadsheet(directory):
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
         if os.path.isfile(f):
+            labelText.set("Reading: " + filename)
             cellList.clear()
             reader = PyPDF2.PdfReader(f)
             billPage = getRMCPage(reader.pages[0].extract_text().splitlines()) - 1
@@ -106,3 +107,4 @@ def outputToSpreadsheet(directory):
             rowMod += 1
                 
     wb.save('output.xls')
+    labelText.set("Done")
