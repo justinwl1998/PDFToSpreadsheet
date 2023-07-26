@@ -4,10 +4,15 @@
 #   Then output them to a spreadsheet.
 
 import os
+from threading import Thread
 from tkinter import filedialog as fd
 from tkinter import messagebox
 from tkinter import *
 from helpers import getRMCPage, getCharges, outputToSpreadsheet
+
+def threading():
+    t1 = Thread(target=scanCallBack)
+    t1.start()
 
 def directorySelectCallBack():
     folder_selected = fd.askdirectory()
@@ -16,8 +21,12 @@ def directorySelectCallBack():
 
 def scanCallBack():
     if os.path.isdir(entry_text.get()):
+        B1["state"] = "disabled"
+        B2["state"] = "disabled"
         outputToSpreadsheet(entry_text.get())
         messagebox.showinfo("Info", "Charges written to output.xls")
+        B1["state"] = "normal"
+        B2["state"] = "normal"
     else:
         messagebox.showerror("Error", "Directory does not exist!")
     return
@@ -39,7 +48,7 @@ B1 = Button(root, text= "...", command = directorySelectCallBack, width=8)
 B1.grid(column=1, row=4, sticky=W)
 #B1.place(relx=1.0, rely=0.48, anchor=E)
 
-B2 = Button(root, text="Convert to spreadsheet", command = scanCallBack)
+B2 = Button(root, text="Convert to spreadsheet", command = threading)
 B2.place(relx=0.5, rely=0.8, anchor=CENTER, height=32, width=150)
 root.mainloop()
 
