@@ -12,7 +12,7 @@ If you ever wonder how your Xfinity bills have gotten higher and higher, use thi
 
 ## Getting Started
 
-[todo] release an executable
+This project requires Python 3, but otherwise run the executable.
 
 ## Author
 Created by Justin Liu
