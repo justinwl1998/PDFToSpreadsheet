@@ -3,3 +3,4 @@ output.xls
 __pycache__/
 build/
 dist/
+pdf2spreadsheet.spec

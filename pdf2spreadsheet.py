@@ -7,6 +7,7 @@ from tkinter import *
 from helpers import getRMCPage, getCharges, outputToSpreadsheet
 
 def threading():
+    progress.place(anchor = CENTER, relx = 0.5, rely = .6)
     t1 = Thread(target=scanCallBack)
     t1.start()
 
@@ -22,8 +23,14 @@ def scanCallBack():
         progress.start(2)
         outputToSpreadsheet(entry_text.get(), status_text)
         progress.stop()
-        messagebox.showinfo("Info", "Charges written to output.xls")
+        progress.place_forget()
+        msg_box = messagebox.askquestion("Status", "Charges written to " + os.getcwd() + "\output.xls\n\nDo you want to open the file?")
+
+        if msg_box == 'yes':
+            os.system("start output.xls")
+
     else:
+        progress.place_forget()
         messagebox.showerror("Error", "Directory does not exist!")
     B1["state"] = "normal"
     B2["state"] = "normal"
@@ -49,7 +56,7 @@ StatusLabel = Label(root, textvariable=status_text, justify="left", anchor="w")
 StatusLabel.grid(column=0, row=5, sticky=W, padx=(30,0))
 
 progress = ttk.Progressbar(root, orient = HORIZONTAL, length = 200, mode='indeterminate')
-progress.place(anchor = CENTER, relx = 0.5, rely = .6)
+#progress.place(anchor = CENTER, relx = 0.5, rely = .6)
 
 B2 = Button(root, text="Convert to spreadsheet", command = threading)
 B2.place(relx=0.5, rely=0.8, anchor=CENTER, height=32, width=150)
