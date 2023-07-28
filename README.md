@@ -14,7 +14,7 @@ This is a sample of a bill that would be converted.
 
 ## Getting Started
 
-This project requires Python 3, but otherwise run the executable.
+This project requires Python 3 and you must download all of your bills ahead of time.
 
 ## Author
 Created by Justin Liu
