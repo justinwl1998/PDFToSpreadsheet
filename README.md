@@ -8,6 +8,8 @@ This application is written in Python. It reads Xfinity billing statements in a 
 
 If you ever wonder how your Xfinity bills have gotten higher and higher, use this application to find out.
 
+![A snippet of an Xfinity billing page, showing its charges.](./img/preview.png)
+
 ## Getting Started
 
 [todo] release an executable
